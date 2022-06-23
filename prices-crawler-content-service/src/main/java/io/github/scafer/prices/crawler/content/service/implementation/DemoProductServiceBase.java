@@ -26,7 +26,7 @@ public class DemoProductServiceBase extends ProductServiceBase {
     @Override
     protected CompletableFuture<SearchProductsDto> searchItemLogic(String query) {
         var productsResult = getDemoProducts();
-        return CompletableFuture.completedFuture(new SearchProductsDto(locale, catalog, productsResult, generateDisplayOptions()));
+        return CompletableFuture.completedFuture(new SearchProductsDto(locale, catalog, productsResult, generateCatalogData()));
     }
 
     @Override

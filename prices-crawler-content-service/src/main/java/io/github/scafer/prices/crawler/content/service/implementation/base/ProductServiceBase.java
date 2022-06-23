@@ -52,12 +52,12 @@ public abstract class ProductServiceBase implements ProductService {
     @Override
     public Mono<SearchProductsDto> searchItem(String query) {
         if (isLocaleOrCatalogDisabled()) {
-            return Mono.just(new SearchProductsDto(locale, catalog, new ArrayList<>(), generateDisplayOptions()));
+            return Mono.just(new SearchProductsDto(locale, catalog, new ArrayList<>(), generateCatalogData()));
         }
 
         if (LocalProductCacheService.isProductListCached(locale, catalog, query)) {
             var cache = LocalProductCacheService.retrieveProductsList(locale, catalog, query);
-            return Mono.just(new SearchProductsDto(locale, catalog, cache, generateDisplayOptions()));
+            return Mono.just(new SearchProductsDto(locale, catalog, cache, generateCatalogData()));
         }
 
         var result = searchItemLogic(query)
@@ -88,18 +88,20 @@ public abstract class ProductServiceBase implements ProductService {
         return Mono.fromFuture(result);
     }
 
-    protected Map<String, Object> generateDisplayOptions() {
+    protected Map<String, Object> generateCatalogData() {
         var displayOptions = new HashMap<String, Object>();
 
         catalogDataService.findCatalog(locale, catalog).stream().findFirst()
                 .ifPresent(value -> displayOptions.put("catalogName", value.getName()));
+
+        displayOptions.put("historyEnabled", isLocaleOrCatalogHistoryEnabled());
 
         return displayOptions;
     }
 
     private SearchProductDto saveProductToDatabase(SearchProductDto searchProductDto) {
         if (isHistoryEnabled && isLocaleOrCatalogHistoryEnabled()) {
-            var searchResultDto = new SearchProductsDto(locale, catalog, List.of(searchProductDto.getProduct()), generateDisplayOptions());
+            var searchResultDto = new SearchProductsDto(locale, catalog, List.of(searchProductDto.getProduct()), generateCatalogData());
             CompletableFuture.supplyAsync(() -> productDatabaseService.saveSearchResult(searchResultDto));
         }
 
@@ -122,12 +124,12 @@ public abstract class ProductServiceBase implements ProductService {
 
     private boolean isLocaleOrCatalogHistoryEnabled() {
         return (localeDao == null && catalogDao == null) ||
-                ((localeDao != null && localeDao.isHistoryEnabled()) || (catalogDao != null && catalogDao.isHistoryEnabled()));
+                ((localeDao != null && localeDao.isHistoryEnabled()) && (catalogDao != null && catalogDao.isHistoryEnabled()));
     }
 
     private boolean isLocaleOrCatalogCacheEnabled() {
         return (localeDao == null && catalogDao == null) ||
-                ((localeDao != null && localeDao.isCacheEnabled()) || (catalogDao != null && catalogDao.isCacheEnabled()));
+                ((localeDao != null && localeDao.isCacheEnabled()) && (catalogDao != null && catalogDao.isCacheEnabled()));
     }
 
     private boolean isLocaleOrCatalogDisabled() {
