@@ -1,13 +1,14 @@
 package io.github.scafer.prices.crawler.content.service.implementation;
 
-import io.github.scafer.prices.crawler.content.domain.service.CatalogDataService;
-import io.github.scafer.prices.crawler.content.domain.service.ProductDataService;
+import io.github.scafer.prices.crawler.content.domain.service.cache.ProductCacheService;
+import io.github.scafer.prices.crawler.content.domain.service.data.CatalogDataService;
+import io.github.scafer.prices.crawler.content.domain.service.data.ProductDataService;
 import io.github.scafer.prices.crawler.content.domain.service.dto.ProductDto;
 import io.github.scafer.prices.crawler.content.domain.service.dto.SearchProductDto;
 import io.github.scafer.prices.crawler.content.domain.service.dto.SearchProductsDto;
 import io.github.scafer.prices.crawler.content.domain.service.dto.UpdateProductsDto;
 import io.github.scafer.prices.crawler.content.domain.util.DateTimeUtils;
-import io.github.scafer.prices.crawler.content.service.implementation.base.ProductServiceBase;
+import io.github.scafer.prices.crawler.content.service.base.ProductServiceBase;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,9 @@ import java.util.concurrent.CompletableFuture;
 @Service
 @Profile("demo")
 @Qualifier("local.demo")
-public class DemoProductServiceBase extends ProductServiceBase {
-    public DemoProductServiceBase(CatalogDataService catalogDataService, ProductDataService productDatabaseService) {
-        super("local", "demo", catalogDataService, productDatabaseService);
+public class DemoProductService extends ProductServiceBase {
+    public DemoProductService(CatalogDataService catalogDataService, ProductDataService productDatabaseService, ProductCacheService productCacheService) {
+        super("local", "demo", catalogDataService, productDatabaseService, productCacheService);
     }
 
     @Override

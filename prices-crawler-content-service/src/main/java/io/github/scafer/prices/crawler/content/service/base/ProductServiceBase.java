@@ -1,14 +1,14 @@
-package io.github.scafer.prices.crawler.content.service.implementation.base;
+package io.github.scafer.prices.crawler.content.service.base;
 
 import io.github.scafer.prices.crawler.content.domain.repository.dao.CatalogDao;
 import io.github.scafer.prices.crawler.content.domain.repository.dao.LocaleDao;
-import io.github.scafer.prices.crawler.content.domain.service.CatalogDataService;
-import io.github.scafer.prices.crawler.content.domain.service.ProductDataService;
-import io.github.scafer.prices.crawler.content.domain.service.ProductService;
+import io.github.scafer.prices.crawler.content.domain.service.base.ProductService;
+import io.github.scafer.prices.crawler.content.domain.service.cache.ProductCacheService;
+import io.github.scafer.prices.crawler.content.domain.service.data.CatalogDataService;
+import io.github.scafer.prices.crawler.content.domain.service.data.ProductDataService;
 import io.github.scafer.prices.crawler.content.domain.service.dto.SearchProductDto;
 import io.github.scafer.prices.crawler.content.domain.service.dto.SearchProductsDto;
 import io.github.scafer.prices.crawler.content.domain.service.dto.UpdateProductsDto;
-import io.github.scafer.prices.crawler.content.service.cache.LocalProductCacheService;
 import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Mono;
 
@@ -23,6 +23,7 @@ public abstract class ProductServiceBase implements ProductService {
     protected final String catalog;
     private final CatalogDataService catalogDataService;
     private final ProductDataService productDatabaseService;
+    private final ProductCacheService productCacheService;
     protected LocaleDao localeDao;
     protected CatalogDao catalogDao;
     @Value("${prices.crawler.cache.enabled:true}")
@@ -30,11 +31,15 @@ public abstract class ProductServiceBase implements ProductService {
     @Value("${prices.crawler.history.enabled:true}")
     private boolean isHistoryEnabled;
 
-    protected ProductServiceBase(String locale, String catalog, CatalogDataService catalogDataService, ProductDataService productDatabaseService) {
+    protected ProductServiceBase(String locale, String catalog,
+                                 CatalogDataService catalogDataService,
+                                 ProductDataService productDatabaseService,
+                                 ProductCacheService productCacheService) {
         this.locale = locale;
         this.catalog = catalog;
         this.catalogDataService = catalogDataService;
         this.productDatabaseService = productDatabaseService;
+        this.productCacheService = productCacheService;
 
         catalogDataService.findLocale(locale)
                 .ifPresent(value -> localeDao = value);
@@ -55,8 +60,8 @@ public abstract class ProductServiceBase implements ProductService {
             return Mono.just(new SearchProductsDto(locale, catalog, new ArrayList<>(), generateCatalogData()));
         }
 
-        if (LocalProductCacheService.isProductListCached(locale, catalog, query)) {
-            var cache = LocalProductCacheService.retrieveProductsList(locale, catalog, query);
+        if (productCacheService.isProductListCached(locale, catalog, query)) {
+            var cache = productCacheService.retrieveProductsList(locale, catalog, query);
             return Mono.just(new SearchProductsDto(locale, catalog, cache, generateCatalogData()));
         }
 
@@ -116,7 +121,7 @@ public abstract class ProductServiceBase implements ProductService {
         }
 
         if (isCacheEnabled && isLocaleOrCatalogCacheEnabled()) {
-            LocalProductCacheService.storeProductsList(locale, catalog, query, searchProductsDto.getProducts());
+            productCacheService.storeProductsList(locale, catalog, query, searchProductsDto.getProducts());
         }
 
         return searchProductsDto;

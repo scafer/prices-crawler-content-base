@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +24,7 @@ public class LocaleDto {
         this.reference = localeDao.getReference();
         this.description = localeDao.getDescription();
         this.isActive = localeDao.isActive();
-        this.catalogs = localeDao.getCatalogs().stream().map(CatalogDto::new).collect(Collectors.toList());
+        this.catalogs = localeDao.getCatalogs().stream().map(CatalogDto::new).toList();
         this.data = localeDao.getData();
     }
 }

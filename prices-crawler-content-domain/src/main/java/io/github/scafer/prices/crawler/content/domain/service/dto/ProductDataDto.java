@@ -11,7 +11,6 @@ import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -41,7 +40,7 @@ public class ProductDataDto {
         this.productUrl = productDao.getProductUrl();
         this.imageUrl = productDao.getImageUrl();
         this.eanUpc = productDao.getEanUpcList();
-        this.pricesHistory = productDao.getPricesHistory().stream().map(PriceDto::new).collect(Collectors.toList());
+        this.pricesHistory = productDao.getPricesHistory().stream().map(PriceDto::new).toList();
         this.data = productDao.getData();
     }
 

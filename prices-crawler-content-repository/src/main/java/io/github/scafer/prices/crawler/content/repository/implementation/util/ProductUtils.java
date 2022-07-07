@@ -1,4 +1,4 @@
-package io.github.scafer.prices.crawler.content.repository.implementation.utils;
+package io.github.scafer.prices.crawler.content.repository.implementation.util;
 
 import io.github.scafer.prices.crawler.content.domain.repository.dao.PriceDao;
 import io.github.scafer.prices.crawler.content.domain.util.DateTimeUtils;

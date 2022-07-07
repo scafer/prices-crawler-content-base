@@ -2,7 +2,7 @@ package io.github.scafer.prices.crawler.content.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.mongodb.client.MongoClient;
-import io.github.scafer.prices.crawler.content.domain.service.ProductDataService;
+import io.github.scafer.prices.crawler.content.domain.service.data.ProductDataService;
 import io.github.scafer.prices.crawler.content.domain.service.dto.ProductDto;
 import io.github.scafer.prices.crawler.content.domain.service.dto.SearchProductsDto;
 import io.github.scafer.prices.crawler.content.domain.service.dto.SearchQueryDto;

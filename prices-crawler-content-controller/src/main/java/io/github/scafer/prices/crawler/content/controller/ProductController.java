@@ -1,6 +1,6 @@
 package io.github.scafer.prices.crawler.content.controller;
 
-import io.github.scafer.prices.crawler.content.domain.service.ProductService;
+import io.github.scafer.prices.crawler.content.domain.service.base.ProductService;
 import io.github.scafer.prices.crawler.content.domain.service.dto.*;
 import io.github.scafer.prices.crawler.content.domain.service.provider.ProductServiceProvider;
 import io.github.scafer.prices.crawler.content.repository.implementation.ProductDataServiceImp;

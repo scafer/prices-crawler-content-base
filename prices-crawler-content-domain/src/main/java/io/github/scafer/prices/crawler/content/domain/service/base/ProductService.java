@@ -1,4 +1,4 @@
-package io.github.scafer.prices.crawler.content.domain.service;
+package io.github.scafer.prices.crawler.content.domain.service.base;
 
 import io.github.scafer.prices.crawler.content.domain.service.dto.SearchProductDto;
 import io.github.scafer.prices.crawler.content.domain.service.dto.SearchProductsDto;

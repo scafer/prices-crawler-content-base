@@ -1,6 +1,6 @@
 package io.github.scafer.prices.crawler.content.controller;
 
-import io.github.scafer.prices.crawler.content.domain.service.CatalogDataService;
+import io.github.scafer.prices.crawler.content.domain.service.data.CatalogDataService;
 import io.github.scafer.prices.crawler.content.domain.service.dto.LocaleDto;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -24,7 +23,7 @@ public class CatalogController {
     @GetMapping("/locales")
     public List<LocaleDto> getLocales() {
         return catalogDataService.findAllLocales().stream()
-                .map(LocaleDto::new).collect(Collectors.toList());
+                .map(LocaleDto::new).toList();
     }
 
     @CrossOrigin

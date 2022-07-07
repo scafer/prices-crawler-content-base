@@ -5,10 +5,10 @@ import io.github.scafer.prices.crawler.content.domain.repository.ProductIncident
 import io.github.scafer.prices.crawler.content.domain.repository.dao.PriceDao;
 import io.github.scafer.prices.crawler.content.domain.repository.dao.ProductDao;
 import io.github.scafer.prices.crawler.content.domain.repository.dao.ProductIncidentDao;
-import io.github.scafer.prices.crawler.content.domain.service.ProductIncidentDataService;
+import io.github.scafer.prices.crawler.content.domain.service.data.ProductIncidentDataService;
 import io.github.scafer.prices.crawler.content.domain.service.dto.ProductDto;
 import io.github.scafer.prices.crawler.content.domain.util.DateTimeUtils;
-import io.github.scafer.prices.crawler.content.repository.implementation.utils.ProductUtils;
+import io.github.scafer.prices.crawler.content.repository.implementation.util.ProductUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 

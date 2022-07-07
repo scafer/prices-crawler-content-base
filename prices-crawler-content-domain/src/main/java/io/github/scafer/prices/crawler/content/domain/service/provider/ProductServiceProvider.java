@@ -1,6 +1,6 @@
 package io.github.scafer.prices.crawler.content.domain.service.provider;
 
-import io.github.scafer.prices.crawler.content.domain.service.ProductService;
+import io.github.scafer.prices.crawler.content.domain.service.base.ProductService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 

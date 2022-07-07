@@ -3,7 +3,7 @@ package io.github.scafer.prices.crawler.content.repository.implementation;
 import io.github.scafer.prices.crawler.content.domain.repository.CatalogDataRepository;
 import io.github.scafer.prices.crawler.content.domain.repository.dao.CatalogDao;
 import io.github.scafer.prices.crawler.content.domain.repository.dao.LocaleDao;
-import io.github.scafer.prices.crawler.content.domain.service.CatalogDataService;
+import io.github.scafer.prices.crawler.content.domain.service.data.CatalogDataService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
